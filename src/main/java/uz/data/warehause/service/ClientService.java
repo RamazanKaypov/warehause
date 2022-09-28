@@ -1,11 +1,12 @@
 package uz.data.warehause.service;
 
+import org.springframework.stereotype.Service;
 import uz.data.warehause.entity.Client;
 import uz.data.warehause.repository.ClientRepository;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ClientService {
     final ClientRepository clientRepository;
 
@@ -22,38 +23,38 @@ public class ClientService {
         return byId.orElse(null);
     }
 
-    public String createClient(Client dto){
+    public Result createClient(Client dto){
         if (clientRepository.existsClientByPhoneNumber(dto.getPhoneNumber())){
-            return "This Phone Number already exists!";
+            return new Result("This Phone Number already exists!",false);
         }else {
             clientRepository.save(dto);
-            return "Successfuly added!";
+            return new Result("Successfuly added!",true);
         }
     }
 
-    public String updateClient(Client dto, Integer id){
+    public Result updateClient(Client dto, Integer id){
         Optional<Client> byId = clientRepository.findById(id);
-        if (byId.isEmpty()) return "Client not found!";
+        if (byId.isEmpty()) return new Result("Client not found!",false);
         else {
             if (clientRepository.existsClientByPhoneNumber(dto.getPhoneNumber())){
-                return "This Phone Number already exists!";
+                return new Result("This Phone Number already exists!",false);
             }else {
                 Client client=byId.get();
                 client.setFirstname(dto.getFirstname());
                 client.setLastname(dto.getLastname());
                 client.setPhoneNumber(dto.getPhoneNumber());
                 clientRepository.save(client);
-                return "Succcessfully updated!";
+                return new Result("Succcessfully updated!",true);
             }
         }
     }
 
-    public String deleteClient(Integer id){
+    public Result deleteClient(Integer id){
         Optional<Client> byId = clientRepository.findById(id);
-        if (byId.isEmpty()) return "Client not found!";
+        if (byId.isEmpty()) return new Result("Client not found!",false);
         else {
             clientRepository.deleteById(id);
-            return "Successfuly deleted!";
+            return new Result("Successfuly deleted!",false);
         }
     }
 

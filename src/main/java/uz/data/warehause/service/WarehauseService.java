@@ -1,16 +1,20 @@
 package uz.data.warehause.service;
 
+import org.springframework.stereotype.Service;
 import uz.data.warehause.entity.Warehause;
+import uz.data.warehause.repository.UserRepository;
 import uz.data.warehause.repository.WarehauseRepository;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class WarehauseService {
     final WarehauseRepository warehauseRepository;
+    final UserRepository userRepository;
 
-    public WarehauseService(WarehauseRepository warehauseRepository) {
+    public WarehauseService(WarehauseRepository warehauseRepository, UserRepository userRepository) {
         this.warehauseRepository = warehauseRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Warehause> getAllWarehause() {
@@ -22,37 +26,41 @@ public class WarehauseService {
         return byId.orElse(null);
     }
 
-    public String createWarehause(Warehause warehause) {
+    public Result createWarehause(Warehause warehause) {
         if (warehauseRepository.existsWarehauseByName(warehause.getName())) {
-            return "This Warehause already exists!";
+            return new Result("This Warehause already exists!",false);
         } else {
             warehauseRepository.save(warehause);
-            return "Successfuly added!";
+            return new Result("Successfuly added!",true);
         }
     }
 
-    public String updateWarehause(Integer id, Warehause dto) {
+    public Result updateWarehause(Integer id, Warehause dto) {
         Optional<Warehause> byId = warehauseRepository.findById(id);
-        if (byId.isEmpty()) return "Warehause not found!";
+        if (byId.isEmpty()) return new Result("Warehause not found!",false);
         else {
             if (warehauseRepository.existsWarehauseByName(dto.getName())) {
-                return "This Warehause already exists!";
+                return new Result("This Warehause already exists!",false);
             } else {
                 Warehause warehause=byId.get();
                 warehause.setName(dto.getName());
                 warehause.setStatus(dto.getStatus());
                 warehauseRepository.save(warehause);
-                return "Successfuly updated!";
+                return new Result("Successfuly updated!",true);
             }
         }
     }
 
-    public String deleteWarehause(Integer id){
+    public Result deleteWarehause(Integer id){
         Optional<Warehause> byId = warehauseRepository.findById(id);
-        if (byId.isEmpty()) return "Warehause not found!";
+        if (byId.isEmpty()) return new Result("Warehause not found!",false);
         else {
-            warehauseRepository.deleteById(id);
-            return "Successfuly deleted!";
+            if (userRepository.existsUsersByWarehauses(id)){
+              return new Result("In this Warehause exists users!",false);
+            }else {
+                warehauseRepository.deleteById(id);
+                return new Result("Successfuly deleted!", true);
+            }
         }
     }
 

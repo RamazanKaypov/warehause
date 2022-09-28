@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import uz.data.warehause.entity.Supplier;
 
 public interface SupplierRepository extends JpaRepository<Supplier,Integer> {
+
+    boolean existsSupplierByPhoneNumber(String phoneNumber);
 }

@@ -5,4 +5,6 @@ import uz.data.warehause.entity.Warehause;
 
 public interface WarehauseRepository extends JpaRepository<Warehause, Integer> {
     boolean existsWarehauseByName(String name);
+
+    boolean existsWarehauseById(Integer id);
 }

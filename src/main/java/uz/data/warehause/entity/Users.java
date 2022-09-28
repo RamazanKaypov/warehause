@@ -23,7 +23,7 @@ public class Users {
     private String lastname;
 
     @Column(nullable = false,unique = true)
-    private String phoneNumber;
+        private String phoneNumber;
 
     @Column(nullable = false,unique = true)
     private String code;
