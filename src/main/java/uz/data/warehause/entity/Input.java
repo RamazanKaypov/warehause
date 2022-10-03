@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +17,7 @@ public class Input {
     private Integer id;
 
     @Column(nullable = false)
-    private String date;
+    private Timestamp timestamp;
 
     @ManyToOne
     private Warehause warehause;

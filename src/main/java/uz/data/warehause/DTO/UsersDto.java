@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -17,11 +17,9 @@ public class UsersDto {
 
     private String phoneNumber;
 
-    private String code;
-
     private String password;
 
-    private List<Integer> warehauseIds;
+    private Set<Integer> warehauseIds;
 
     private Boolean status;
 

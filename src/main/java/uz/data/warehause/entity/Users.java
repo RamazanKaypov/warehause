@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -32,7 +32,7 @@ public class Users {
     private String password;
 
     @ManyToMany
-    private List<Warehause> warehauses;
+    private Set<Warehause> warehauses;
 
     private Boolean status;
 

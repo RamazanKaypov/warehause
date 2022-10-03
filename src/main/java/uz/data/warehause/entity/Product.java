@@ -22,8 +22,8 @@ public class Product {
     @ManyToOne
     Category categoryId;
 
-    @OneToMany
-    private List<Attachment> photo;
+    @OneToOne
+    private Attachment photo;
 
     @Column(nullable = false,unique = true)
     private String code;

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -19,13 +20,13 @@ public class InputProduct {
     private Product product;
 
     @Column(nullable = false)
-    private long amount;
+    private double amount;
 
     @Column(nullable = false)
-    private long price;
+    private double price;
 
     @Column(nullable = false)
-    private String expire_date;
+    private Date expire_date;
 
     @ManyToOne
     private Input input;

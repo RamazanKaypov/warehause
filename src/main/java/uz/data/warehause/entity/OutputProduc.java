@@ -19,10 +19,10 @@ public class OutputProduc {
     private Product product;
 
     @Column(nullable = false)
-    private long amount;
+    private double amount;
 
     @Column(nullable = false)
-    private long price;
+    private double price;
 
     @ManyToOne
     private Output output;
